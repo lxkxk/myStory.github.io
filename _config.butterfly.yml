@@ -1213,11 +1213,11 @@ CDN:
     # gitalk:
     # gitalk_css:
     # giscus:
-    # instantpage:
+    instantpage: https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/instant.page/5.1.0/instantpage.min.js
     # instantsearch:
     # katex:
     # katex_copytex:
-    # lazyload:
+    # lazyload: https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/vanilla-lazyload/17.3.1/lazyload.iife.min.js
     # local_search:
     # main:
     # main_css:
@@ -1235,11 +1235,21 @@ CDN:
     # snackbar_css:
     # translate:
     # twikoo:
-    # typed:
+    typed: https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/typed.js/2.0.12/typed.min.js
     # utils:
     # valine:
     # waline_css:
     # waline_js:
+    fontawesomeV6: https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/6.0.0/css/all.min.css
+    animate_css: https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css
+    wow_js: https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js
+    wow_init_js: https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js
+    aplayer_css: https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.css
+    aplayer_js: https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/aplayer/1.10.1/APlayer.min.js
+    meting_js: https://cdn1.tianli0.top/npm/js-heo@1.0.12/metingjs/Meting.min.js
+    coin_js: /js/coin.js
+    coin_css: /css/coin.css
+
 # wowjs动画特效
 # see https://www.npmjs.com/package/hexo-butterfly-wowjs
 wowjs:
@@ -1297,9 +1307,6 @@ wowjs:
     # - class: site-card
     #   style: animate__animated
     #   duration: 3s
-  animate_css: https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css
-  wow_js: https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js
-  wow_init_js: https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js
 
 # 留言板
 # envelope_comment
