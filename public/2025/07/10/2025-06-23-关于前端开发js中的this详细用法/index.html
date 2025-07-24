@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>js-this作用 | MyStory🥝</title><meta name="author" content="liuxk"><meta name="copyright" content="liuxk"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="this的详细作用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js-this作用">
+<meta property="og:url" content="https://www.liuxk.online/2025/07/10/2025-06-23-%E5%85%B3%E4%BA%8E%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91js%E4%B8%AD%E7%9A%84this%E8%AF%A6%E7%BB%86%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:site_name" content="MyStory🥝">
+<meta property="og:description" content="this的详细作用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.liuxk.online/img/wen1.jpeg">
+<meta property="article:published_time" content="2025-07-10T10:19:03.000Z">
+<meta property="article:modified_time" content="2025-07-13T14:00:00.000Z">
+<meta property="article:author" content="liuxk">
+<meta property="article:tag" content="this用法">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.liuxk.online/img/wen1.jpeg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "js-this作用",
+  "url": "https://www.liuxk.online/2025/07/10/2025-06-23-%E5%85%B3%E4%BA%8E%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91js%E4%B8%AD%E7%9A%84this%E8%AF%A6%E7%BB%86%E7%94%A8%E6%B3%95/",
+  "image": "https://www.liuxk.online/img/wen1.jpeg",
+  "datePublished": "2025-07-10T10:19:03.000Z",
+  "dateModified": "2025-07-13T14:00:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "liuxk",
+      "url": "https://www.liuxk.online"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/assets/coffee.png"><link rel="canonical" href="https://www.liuxk.online/2025/07/10/2025-06-23-%E5%85%B3%E4%BA%8E%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91js%E4%B8%AD%E7%9A%84this%E8%AF%A6%E7%BB%86%E7%94%A8%E6%B3%95/index.html"><link rel="preconnect" href="//cdnjs.cloudflare.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const hour = new Date().getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else theme === 'light' ? activateLightMode() : activateDarkMode()
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdnjs.cloudflare.com/ajax/libs/egjs-infinitegrid/4.12.0/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'js-this作用',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="https://cdn1.tianli0.top/npm/element-ui@2.15.6/packages/theme-chalk/lib/index.css"><style id="themeColor"></style><style id="rightSide"></style><style id="transPercent"></style><style id="blurNum"></style><style id="settingStyle"></style><span id="fps"></span><style id="defineBg"></style><style id="menu_shadow"></style><meta name="generator" content="Hexo 7.3.0"></head><body><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+btf.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+
+</script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js"></script><div id="web_bg" style="background-color: #efefef;"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/toux.jpg" onerror="this.onerror=null;this.src='/assets/r1.jpg'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw icon-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw icon--article"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw icon-guidang1"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw icon-sekuaibiaoqian"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw icon-fenlei"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw icon-pinweishenghuo"></i><span> 休闲</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/life/music/"><i class="fa-fw icon-yinle"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/life/movies/"><i class="fa-fw icon-dianying1"></i><span> 影院</span></a></li><li><a class="site-page child" href="/life/games/"><i class="fa-fw icon-youxishoubing"></i><span> 游戏</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw icon-xiangzi"></i><span> 百宝箱</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/box/gallery/"><i class="fa-fw icon-tubiaozhizuomoban"></i><span> 画廊</span></a></li><li><a class="site-page child" href="/box/animation/"><i class="fa-fw icon-nvwumao"></i><span> 动画</span></a></li><li><a class="site-page child" href="/box/nav/"><i class="fa-fw icon-zhifengche"></i><span> 网址导航</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw icon-wangye"></i><span> 网站</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/site/census/"><i class="fa-fw icon--tongjibiao"></i><span> 网站统计</span></a></li><li><a class="site-page child" href="/site/echarts/"><i class="fa-fw icon-shujutongji1"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/site/time/"><i class="fa-fw icon-xianxingshalou"></i><span> 旧时光</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw icon-maoliang"></i><span> 个人</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/personal/love/"><i class="fa-fw icon-love-sign"></i><span> 小屋</span></a></li><li><a class="site-page child" href="/personal/about/"><i class="fa-fw icon-paperplane"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(/img/wen1.jpeg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/toux.jpg" alt="Logo"><span class="site-name">MyStory🥝</span></a><a class="nav-page-title" href="/"><span class="site-name">js-this作用</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw icon-home"></i><span> 首页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw icon--article"></i><span> 文章</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw icon-guidang1"></i><span> 归档</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw icon-sekuaibiaoqian"></i><span> 标签</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw icon-fenlei"></i><span> 分类</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw icon-pinweishenghuo"></i><span> 休闲</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/life/music/"><i class="fa-fw icon-yinle"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/life/movies/"><i class="fa-fw icon-dianying1"></i><span> 影院</span></a></li><li><a class="site-page child" href="/life/games/"><i class="fa-fw icon-youxishoubing"></i><span> 游戏</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw icon-xiangzi"></i><span> 百宝箱</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/box/gallery/"><i class="fa-fw icon-tubiaozhizuomoban"></i><span> 画廊</span></a></li><li><a class="site-page child" href="/box/animation/"><i class="fa-fw icon-nvwumao"></i><span> 动画</span></a></li><li><a class="site-page child" href="/box/nav/"><i class="fa-fw icon-zhifengche"></i><span> 网址导航</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw icon-wangye"></i><span> 网站</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/site/census/"><i class="fa-fw icon--tongjibiao"></i><span> 网站统计</span></a></li><li><a class="site-page child" href="/site/echarts/"><i class="fa-fw icon-shujutongji1"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/site/time/"><i class="fa-fw icon-xianxingshalou"></i><span> 旧时光</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw icon-maoliang"></i><span> 个人</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/personal/love/"><i class="fa-fw icon-love-sign"></i><span> 小屋</span></a></li><li><a class="site-page child" href="/personal/about/"><i class="fa-fw icon-paperplane"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">js-this作用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-07-10T10:19:03.000Z" title="发表于 2025-07-10 18:19:03">2025-07-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-07-13T14:00:00.000Z" title="更新于 2025-07-13 22:00:00">2025-07-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/js%E4%B8%AD%E7%9A%84this%E7%94%A8%E6%B3%95/">js中的this用法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div id="post-outdate-notice" data="{&quot;limitDay&quot;:365,&quot;messagePrev&quot;:&quot;It has been&quot;,&quot;messageNext&quot;:&quot;days since the last update, the content of the article may be outdated.&quot;,&quot;postUpdate&quot;:&quot;2025-07-13 22:00:00&quot;}" hidden></div><h2 id="this"><a href="#this" class="headerlink" title="this"></a>this</h2><h3 id="this-的作用"><a href="#this-的作用" class="headerlink" title="this 的作用"></a>this 的作用</h3><ul>
+<li>this 可以帮我们简化很多代码。比如<code>xiaoming.name</code>、<code>xiaoming.age</code>可以直接写成<code>this.name</code>、<code>this.age</code>。</li>
+<li>特别是当我们不知道一个对象是什么，或者这个对象没有名字但又很想调用它的时候，就会使用到 this 对象。</li>
+</ul>
+<p><strong>举例：</strong></p>
+<ul>
+<li>遍历 DOM 对象，绑定 click 事件，调用当前点击的对象的 id，而不是所有对象的 id。</li>
+</ul>
+<p>代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span></span></span><br><span class="line"><span class="tag">    &lt;<span class="attr">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">div</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background-color</span>: green;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">margin</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">window</span>.<span class="property">onload</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> myDiv = <span class="variable language_">document</span>.<span class="title function_">getElementsByTagName</span>(<span class="string">&#x27;div&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; myDiv.<span class="property">length</span>; i++) &#123;</span></span><br><span class="line"><span class="language-javascript">            myDiv[i].<span class="property">onclick</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">console</span>.<span class="title function_">log</span>(i);</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">id</span>);</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">section</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;div0&quot;</span>&gt;</span> div0<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;div1&quot;</span>&gt;</span> div1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;div2&quot;</span>&gt;</span> div2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;div3&quot;</span>&gt;</span> div3<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;div4&quot;</span>&gt;</span> div4<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>点击其中的任何一个元素后，<code>i</code>的打印结果是 5。你可能会觉得很惊讶。我们来解释一下：</p>
+<p>当代码执行完毕后，i 已经等于 5 了。因为一旦运行程序，for 循环已经执行完了，此时 i 等于 5。</p>
+<p>现在，我们尝试在 myDiv[i].onclick 事件中写代码，如果打印：</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.<span class="built_in">log</span>(i);  <span class="comment">//打印结果为5</span></span><br></pre></td></tr></table></figure>
+
+<p>如果打印：</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.<span class="built_in">log</span>(myDiv[i].<span class="built_in">id</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上方这行代码，打印会报错，因为 i&#x3D;5；如果想打印每个 div 的 id，应该这样写：</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">console.<span class="built_in">log</span>(this.<span class="built_in">id</span>);</span><br></pre></td></tr></table></figure>
+
+<p>你看，this 的作用，就体现出来了。</p>
+<p>PS：顺便提醒一下，上面的代码中，如果把<code>var i</code>改成<code>let i</code>，效果又完全不同了。参考链接：<a target="_blank" rel="noopener" href="http://blog.csdn.net/stopllL/article/details/64130664">let 和 var 在 for 循环中的表现</a></p>
+<h3 id="全局作用域中的-this"><a href="#全局作用域中的-this" class="headerlink" title="全局作用域中的 this"></a>全局作用域中的 this</h3><p>当一段代码在浏览器中执行时，所有的全局变量和对象都是在 window 对象上定义的。换而言之，所有的全局变量和对象都属于 window 对象。</p>
+<h2 id="this-的定律"><a href="#this-的定律" class="headerlink" title="this 的定律"></a>this 的定律</h2><p>this 关键字永远指向函数（方法）运行时的<strong>所有者</strong>。</p>
+<h3 id="函数赋值给变量时，this-指向-window"><a href="#函数赋值给变量时，this-指向-window" class="headerlink" title="函数赋值给变量时，this 指向 window"></a>函数赋值给变量时，this 指向 window</h3><p>比如：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var foo1 <span class="operator">=</span> args.getInfo<span class="comment">;</span></span><br><span class="line">foo1()<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">var foo2 <span class="operator">=</span> function()&#123;&#125;<span class="comment">;</span></span><br><span class="line">foo2()<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+
+<p>this 都是指向 window。</p>
+<h3 id="以函数形式调用时，this-永远都是-window"><a href="#以函数形式调用时，this-永远都是-window" class="headerlink" title="以函数形式调用时，this 永远都是 window"></a>以函数形式调用时，this 永远都是 window</h3><h3 id="以方法的形式调用时，this-是调用方法的对象"><a href="#以方法的形式调用时，this-是调用方法的对象" class="headerlink" title="以方法的形式调用时，this 是调用方法的对象"></a>以方法的形式调用时，this 是调用方法的对象</h3><h2 id="解决闭包中的-this-指向问题"><a href="#解决闭包中的-this-指向问题" class="headerlink" title="解决闭包中的 this 指向问题"></a>解决闭包中的 this 指向问题</h2><p>内部函数是可以访问到外部函数的变量的。</p>
+<p>方式一：直接通过父函数的名字访问</p>
+<p>方式二：如果不知道父函数的名字，在父函数里加一句<code>_this = this</code>，此时<code>_this</code>相当于父函数的名字。</p>
+<h3 id="当-this-遇到一些特殊的函数时"><a href="#当-this-遇到一些特殊的函数时" class="headerlink" title="当 this 遇到一些特殊的函数时"></a>当 this 遇到一些特殊的函数时</h3></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://www.liuxk.online">liuxk</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://www.liuxk.online/2025/07/10/2025-06-23-%E5%85%B3%E4%BA%8E%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91js%E4%B8%AD%E7%9A%84this%E8%AF%A6%E7%BB%86%E7%94%A8%E6%B3%95/">https://www.liuxk.online/2025/07/10/2025-06-23-%E5%85%B3%E4%BA%8E%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91js%E4%B8%AD%E7%9A%84this%E8%AF%A6%E7%BB%86%E7%94%A8%E6%B3%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://www.liuxk.online" target="_blank">MyStory🥝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/this%E7%94%A8%E6%B3%95/">this用法</a></div><div class="post-share"><div class="social-share" data-image="/img/wen1.jpeg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.4/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdnjs.cloudflare.com/ajax/libs/butterfly-extsrc/1.1.4/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/2025/07/18/2025-07-18-MBTI%E6%B5%8B%E8%AF%95/" title="16种MBTI人格测试"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/csfm.jpg" onerror="onerror=null;src='/assets/r2.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">16种MBTI人格测试</div></div><div class="info-2"><div class="info-item-1">快来测测你是哪种MBTI吧</div></div></div></a><a class="pagination-related" href="/2025/07/01/2025-07-01-js%E7%9A%84%E5%90%8C%E6%AD%A5%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1/" title="js的同步任务和异步任务"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/wen2.jpg" onerror="onerror=null;src='/assets/r2.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">js的同步任务和异步任务</div></div><div class="info-2"><div class="info-item-1">js详解</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/toux.jpg" onerror="this.onerror=null;this.src='/assets/r1.jpg'" alt="avatar"/></div><div class="author-info-name">liuxk</div><div class="author-info-description">正在玩命开发完善中...</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://memoty48.github.io/memory48.github.io/"><i class="fab fa-github"></i><span>Follow Me gogogo~</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://res.abeim.cn/api/qq/?qq=2337961758" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:2337961758@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><center><b>--- 主域名 ---<br><a href="https://www.liuxk.online" title="此线路部署于github" class="anno_content"><font color="#5ea6e5">liuxk.online</font></a>&nbsp;|&nbsp;<a target="_blank" rel="noopener" href="https://lxkxk.github.io/" title="此线路部署于giyhub" class="anno_content"><font color="#5ea6e5">lxkxk.github.io</font></a></center></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#this"><span class="toc-number">1.</span> <span class="toc-text">this</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#this-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text">this 的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%AD%E7%9A%84-this"><span class="toc-number">1.2.</span> <span class="toc-text">全局作用域中的 this</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#this-%E7%9A%84%E5%AE%9A%E5%BE%8B"><span class="toc-number">2.</span> <span class="toc-text">this 的定律</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E8%B5%8B%E5%80%BC%E7%BB%99%E5%8F%98%E9%87%8F%E6%97%B6%EF%BC%8Cthis-%E6%8C%87%E5%90%91-window"><span class="toc-number">2.1.</span> <span class="toc-text">函数赋值给变量时，this 指向 window</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A5%E5%87%BD%E6%95%B0%E5%BD%A2%E5%BC%8F%E8%B0%83%E7%94%A8%E6%97%B6%EF%BC%8Cthis-%E6%B0%B8%E8%BF%9C%E9%83%BD%E6%98%AF-window"><span class="toc-number">2.2.</span> <span class="toc-text">以函数形式调用时，this 永远都是 window</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A5%E6%96%B9%E6%B3%95%E7%9A%84%E5%BD%A2%E5%BC%8F%E8%B0%83%E7%94%A8%E6%97%B6%EF%BC%8Cthis-%E6%98%AF%E8%B0%83%E7%94%A8%E6%96%B9%E6%B3%95%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.3.</span> <span class="toc-text">以方法的形式调用时，this 是调用方法的对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E9%97%AD%E5%8C%85%E4%B8%AD%E7%9A%84-this-%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">解决闭包中的 this 指向问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%93-this-%E9%81%87%E5%88%B0%E4%B8%80%E4%BA%9B%E7%89%B9%E6%AE%8A%E7%9A%84%E5%87%BD%E6%95%B0%E6%97%B6"><span class="toc-number">3.1.</span> <span class="toc-text">当 this 遇到一些特殊的函数时</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;2025 By liuxk</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.2.0/instantpage.min.js" type="module"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/19.1.3/lazyload.iife.min.js"></script><div class="js-pjax"></div><script src="https://cdn.staticfile.org/jquery/3.6.3/jquery.min.js"></script><script async src="https://cdn1.tianli0.top/npm/vue@2.6.14/dist/vue.min.js"></script><script async src="https://cdn1.tianli0.top/npm/element-ui@2.15.6/lib/index.js"></script><script async src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script><script defer type="text/javascript" src="https://cdn1.tianli0.top/npm/sweetalert2@8.19.0/dist/sweetalert2.all.js"></script><script async src="//npm.elemecdn.com/pace-js@1.2.4/pace.min.js"></script><script defer src="https://cdn1.tianli0.top/gh/nextapps-de/winbox/dist/winbox.bundle.min.js"></script><script async src="//at.alicdn.com/t/c/font_3586335_hsivh70x0fm.js"></script><script async src="//at.alicdn.com/t/c/font_3636804_gr02jmjr3y9.js"></script><script async src="//at.alicdn.com/t/c/font_3612150_kfv55xn3u2g.js"></script><script async src="https://cdn.wpon.cn/2022-sucai/Gold-ingot.js"></script><canvas id="universe"></canvas><canvas id="snow"></canvas><script defer src="/js/fomal.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="请输入想要搜索的内容~" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
